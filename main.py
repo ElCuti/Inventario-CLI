@@ -1,6 +1,5 @@
 from userInterface import userInterface
 
-
 def main():
     userInterface()
 
