@@ -1,10 +1,10 @@
-
 def insertar_producto():
     """
 
     :return:
     """
     print('Hello World1')
+
 
 def buscar_producto():
     """
@@ -13,6 +13,7 @@ def buscar_producto():
     """
     print('Hello World2')
 
+
 def modificar_producto():
     """
 
@@ -20,12 +21,14 @@ def modificar_producto():
      """
     print('Hello World3')
 
+
 def eliminar_producto():
     """
 
     :return:
     """
     print('Hello World4')
+
 
 def mostrar_produtos():
     """

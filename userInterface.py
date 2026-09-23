@@ -4,7 +4,7 @@ from dataMethod import buscar_producto, insertar_producto, modificar_producto, e
 
 
 def userInterface():
-    end=False
+    end = False
     while not end:
         print('''
         1. Añadir producto
@@ -37,4 +37,4 @@ def userInterface():
 
         elif action == 6:
             print("Opción 6")
-            end=True
+            end = True
