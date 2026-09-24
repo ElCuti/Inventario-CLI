@@ -1,5 +1,3 @@
-import readchar
-
 from dataMethod import buscar_producto, insertar_producto, modificar_producto, eliminar_producto, mostrar_produtos
 
 
