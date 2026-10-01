@@ -1,6 +1,45 @@
+from itertools import product
 
 from dataProduct import *
 
+def registrar_movimiento():
+    try:
+        nameProduct = str(input("¿Como se llama el producto que quieres tratar?")).strip()
+        if (nameProduct == ""):
+            raise ValueError("Nombre de producto no válido")
+        elif len(nameProduct) < 3:
+            raise ValueError("No existen productos con el nombre tan corto")
+        elif len(nameProduct) > 50:
+            raise ValueError("No existen productos con el nombre tan largo")
+        else:
+            if nameProduct in productsStock:
+                movimiento = str(input("¿Que movimiento quieres registrar, una [V]enta o una [C]ompra?")).strip().lower()
+                while movimiento!= "v" and movimiento!= "c":
+                    movimiento = str(input("¿Que movimiento quieres registrar, una [V]enta o una [C]ompra?")).strip().lower()
+                if movimiento == "v":
+                    stock = int(input("¿Cuanto has vendido?"))
+                    if stock <= 0:
+                        raise ValueError("No puedes vender una cantidad negativa")
+                    elif stock > productsStock[nameProduct]:
+                        raise ValueError("No puedes vender una cantidad mayor a la que tienes")
+                    else:
+                        productsStock[nameProduct] -= stock
+                        print("Stock actualizado correctamente (Stock antiguo {} -> {} Stock nuevo)".format(
+                            (productsStock[nameProduct] + stock), productsStock[nameProduct]))
+                else:
+                    stock = int(input("¿Cuanto has comprado?"))
+                    if stock <= 0:
+                        raise ValueError("No puedes comprar una cantidad negativa")
+                    else:
+                        productsStock[nameProduct] += stock
+                        print("Stock actualizado correctamente (Stock antiguo {} -> {} Stock nuevo)".format(
+                            (productsStock[nameProduct] - stock), productsStock[nameProduct]))
+            else:
+                raise ValueError("No existe producto solicitado")
+
+    except ValueError as error:
+        print("Error: {}".format(error))
+        input("Por favor, pulse enter y vuelva a intentarlo desde el principio.\n")
 
 def insertar_producto():
     """
@@ -37,7 +76,25 @@ def buscar_producto():
 
     :return:
     """
-    print('Hello World2')
+    try:
+        nameProduct = str(input("¿Como se llama el producto que quieres buscar?")).strip()
+        if (nameProduct == ""):
+            raise ValueError("Nombre de producto no válido")
+        elif len(nameProduct) < 3:
+            raise ValueError("No existen productos con el nombre tan corto")
+        elif len(nameProduct) > 50:
+            raise ValueError("No existen productos con el nombre tan largo")
+        else:
+            if nameProduct in productsStock:
+                print("""INFORMACIÓN DE {}
+                - STOCK: {}
+                - PRECIO: {}€
+                - VALOR TOTAL: {}€""".format(nameProduct, productsStock[nameProduct], productsPrice[nameProduct], productsPrice[nameProduct]*productsStock[nameProduct]))
+            else:
+                raise ValueError("No existe producto solicitado")
+    except ValueError as error:
+        print("Error: {}".format(error))
+        input("Por favor, pulse enter y vuelva a intentarlo desde el principio.\n")
 
 
 def modificar_producto():
@@ -113,4 +170,8 @@ def mostrar_produtos():
 
     :return:
     """
-    print('Hello World5')
+    print('Estos son todos los productos de tu almacen')
+    count = 1
+    for producto in productsStock.keys():
+        print("{}. {} | Stock actual: {} | Precio actual: {}".format(count,producto,productsStock[producto],productsPrice[producto]))
+        count+=1
