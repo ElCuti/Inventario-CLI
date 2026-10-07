@@ -1,6 +1,7 @@
-from itertools import product
+import os
 
 from dataProduct import *
+
 
 def registrar_movimiento():
     try:
@@ -13,9 +14,11 @@ def registrar_movimiento():
             raise ValueError("No existen productos con el nombre tan largo")
         else:
             if nameProduct in productsStock:
-                movimiento = str(input("¿Que movimiento quieres registrar, una [V]enta o una [C]ompra?")).strip().lower()
-                while movimiento!= "v" and movimiento!= "c":
-                    movimiento = str(input("¿Que movimiento quieres registrar, una [V]enta o una [C]ompra?")).strip().lower()
+                movimiento = str(
+                    input("¿Que movimiento quieres registrar, una [V]enta o una [C]ompra?")).strip().lower()
+                while movimiento != "v" and movimiento != "c":
+                    movimiento = str(
+                        input("¿Que movimiento quieres registrar, una [V]enta o una [C]ompra?")).strip().lower()
                 if movimiento == "v":
                     stock = int(input("¿Cuanto has vendido?"))
                     if stock <= 0:
@@ -41,13 +44,14 @@ def registrar_movimiento():
         print("Error: {}".format(error))
         input("Por favor, pulse enter y vuelva a intentarlo desde el principio.\n")
 
+
 def insertar_producto():
     """
 
     :return:
     """
     try:
-        nameProduct = str(input("¿Como se llama el producto que quieres insertar?")).strip()
+        nameProduct = str(input("¿Como se llama el producto que quieres insertar?: ")).strip()
         if (nameProduct == ""):
             raise ValueError("Nombre de producto no válido")
         elif len(nameProduct) < 3:
@@ -55,21 +59,26 @@ def insertar_producto():
         elif len(nameProduct) > 50:
             raise ValueError("El nombre es demasiado largo (máximo 50 caracteres)")
 
-        stockProduct = int(input("¿Cuanto stock tienes de ese producto?"))
+        stockProduct = int(input("¿Cuanto stock tienes de ese producto?: "))
         if stockProduct < 0:
             raise ValueError("No puedes crear un producto con stock negativo")
 
-        priceProduct = float(input("¿Que precio quieres que tenga?"))
+        priceProduct = float(input("¿Que precio quieres que tenga?: "))
         if priceProduct < 0:
             raise ValueError("No puedes crear un producto con valor negativo")
 
         productsStock[nameProduct] = stockProduct
         productsPrice[nameProduct] = priceProduct
-        print("Producto insertado correctamente")
-        print(productsStock, productsPrice)
+        os.system("cls")
+        print('Producto "{}", con cantidad {} y valor {}€ insertado correctamente'.format(nameProduct, stockProduct,
+                                                                                          priceProduct))
+        input("Pulse enter para continuar")
+        os.system("cls")
     except ValueError as error:
         print("Error: {}".format(error))
         input("Por favor, pulse enter y vuelva a intentarlo desde el principio.\n")
+        os.system("cls")
+
 
 def buscar_producto():
     """
@@ -77,7 +86,7 @@ def buscar_producto():
     :return:
     """
     try:
-        nameProduct = str(input("¿Como se llama el producto que quieres buscar?")).strip()
+        nameProduct = str(input("¿Como se llama el producto que quieres buscar?: ")).strip()
         if (nameProduct == ""):
             raise ValueError("Nombre de producto no válido")
         elif len(nameProduct) < 3:
@@ -86,15 +95,20 @@ def buscar_producto():
             raise ValueError("No existen productos con el nombre tan largo")
         else:
             if nameProduct in productsStock:
+                os.system("cls")
                 print("""INFORMACIÓN DE {}
                 - STOCK: {}
                 - PRECIO: {}€
-                - VALOR TOTAL: {}€""".format(nameProduct, productsStock[nameProduct], productsPrice[nameProduct], productsPrice[nameProduct]*productsStock[nameProduct]))
+                - VALOR TOTAL: {}€""".format(nameProduct, productsStock[nameProduct], productsPrice[nameProduct],
+                                             productsPrice[nameProduct] * productsStock[nameProduct]))
+                input("Pulse enter para continuar")
+                os.system("cls")
             else:
                 raise ValueError("No existe producto solicitado")
     except ValueError as error:
         print("Error: {}".format(error))
         input("Por favor, pulse enter y vuelva a intentarlo desde el principio.\n")
+        os.system("cls")
 
 
 def modificar_producto():
@@ -103,7 +117,7 @@ def modificar_producto():
     :return:
      """
     try:
-        nameProduct = str(input("¿Como se llama el producto que quieres modificar?")).strip()
+        nameProduct = str(input("¿Como se llama el producto que quieres modificar?: ")).strip()
         if (nameProduct == ""):
             raise ValueError("Nombre de producto no válido")
         elif len(nameProduct) < 3:
@@ -112,32 +126,49 @@ def modificar_producto():
             raise ValueError("No existen productos con el nombre tan largo")
         else:
             if nameProduct in productsStock:
-                action = int(input("""¿Que tipo de dato quieres modificar?
+                os.system("cls")
+                action = int(input("""¿Que tipo de dato quieres modificar de {}?
                 1. Precio
                 2. Stock
-                * Pulse cualquier otro número para salir
-                """))
+                * Pulse cualquier otro número para salir: 
+                """.format(nameProduct)))
+                os.system("cls")
                 if action == 1:
-                    precioUpdate = float(input("Dime el nuevo precio que quieres ponerle a {} (Precio actual: {}): ".format(nameProduct,productsPrice[nameProduct])))
+                    precioUpdate = float(input(
+                        "Dime el nuevo precio que quieres ponerle a {} (Precio actual: {}): ".format(nameProduct,
+                                                                                                     productsPrice[
+                                                                                                         nameProduct])))
                     if precioUpdate < 0:
                         raise ValueError("No puedes poner a un producto valor negativo")
                     else:
-                        print("Nuevo precio de {} actualizado correctamente {}€ -> {}€".format(nameProduct,productsPrice[nameProduct],precioUpdate))
+                        print("Nuevo precio de {} actualizado correctamente {}€ -> {}€".format(nameProduct,
+                                                                                               productsPrice[
+                                                                                                   nameProduct],
+                                                                                               precioUpdate))
                         productsPrice[nameProduct] = precioUpdate
                 elif action == 2:
-                    stockUpdate = int(input("Dime el nuevo stock que quieres ponerle a {} (Stock actual: {}): ".format(nameProduct, productsStock[nameProduct])))
+                    stockUpdate = int(input(
+                        "Dime el nuevo stock que quieres ponerle a {} (Stock actual: {}): ".format(nameProduct,
+                                                                                                   productsStock[
+                                                                                                       nameProduct])))
                     if stockUpdate < 0:
                         raise ValueError("No puedes poner a un producto stock negativo")
                     else:
-                        print("Nuevo stock de {} actualizado correctamente {} -> {}".format(nameProduct,productsStock[nameProduct],stockUpdate))
+                        print("Nuevo stock de {} actualizado correctamente {} -> {}".format(nameProduct,
+                                                                                            productsStock[nameProduct],
+                                                                                            stockUpdate))
                         productsStock[nameProduct] = stockUpdate
+
                 else:
                     print("Abortando modificacion")
+                input("Pulse enter para continuar")
+                os.system("cls")
             else:
                 raise ValueError("No existe producto solicitado")
     except ValueError as error:
         print("Error: {}".format(error))
         input("Por favor, pulse enter y vuelva a intentarlo desde el principio.\n")
+        os.system("cls")
 
 
 def eliminar_producto():
@@ -146,7 +177,7 @@ def eliminar_producto():
     :return:
     """
     try:
-        nameProduct = str(input("¿Como se llama el producto que quieres eliminar?")).strip()
+        nameProduct = str(input("¿Como se llama el producto que quieres eliminar?: ")).strip()
         if (nameProduct == ""):
             raise ValueError("Nombre de producto no válido")
         elif len(nameProduct) < 3:
@@ -157,12 +188,16 @@ def eliminar_producto():
             if nameProduct in productsStock:
                 del productsStock[nameProduct]
                 del productsPrice[nameProduct]
-                print("¡Almacen actualizado correctamente! producto {} eliminado".format(nameProduct))
+                os.system("cls")
+                print('¡Almacen actualizado correctamente! Producto "{}" eliminado'.format(nameProduct))
+                input("Pulse enter para continuar")
+                os.system("cls")
             else:
                 raise ValueError("No existe producto solicitado")
     except ValueError as error:
         print("Error: {}".format(error))
         input("Por favor, pulse enter y vuelva a intentarlo desde el principio.\n")
+        os.system("cls")
 
 
 def mostrar_produtos():
@@ -170,8 +205,20 @@ def mostrar_produtos():
 
     :return:
     """
-    print('Estos son todos los productos de tu almacen')
-    count = 1
-    for producto in productsStock.keys():
-        print("{}. {} | Stock actual: {} | Precio actual: {}".format(count,producto,productsStock[producto],productsPrice[producto]))
-        count+=1
+    try:
+        if len(productsStock) == 0:
+            raise ValueError("No tienes productos en tu almacen")
+        else:
+            os.system("cls")
+            print('Estos son todos los productos de tu almacen:\n')
+            count = 1
+            for producto in productsStock.keys():
+                print("{}. {} | Stock actual: {} | Precio actual: {}".format(count, producto, productsStock[producto],
+                                                                             productsPrice[producto]))
+                count += 1
+            input("Pulse enter para continuar")
+            os.system("cls")
+    except ValueError as error:
+        print("Error: {}".format(error))
+        input("Por favor, pulse enter y vuelva a intentarlo desde el principio.\n")
+        os.system("cls")

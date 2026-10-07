@@ -1,4 +1,5 @@
-from dataMethod import buscar_producto, registrar_movimiento, insertar_producto, modificar_producto, eliminar_producto, mostrar_produtos
+from dataMethod import buscar_producto, registrar_movimiento, insertar_producto, modificar_producto, eliminar_producto, \
+    mostrar_produtos
 
 
 def userInterface():
@@ -30,7 +31,7 @@ def userInterface():
             mostrar_produtos()
 
         elif action == 6:
-           registrar_movimiento()
+            registrar_movimiento()
 
         elif action == 7:
             end = True
