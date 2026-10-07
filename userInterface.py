@@ -35,3 +35,5 @@ def userInterface():
 
         elif action == 7:
             end = True
+        else:
+            print("Ingrese una opcion valida")

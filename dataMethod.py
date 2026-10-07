@@ -5,7 +5,7 @@ from dataProduct import *
 
 def registrar_movimiento():
     try:
-        nameProduct = str(input("¿Como se llama el producto que quieres tratar?")).strip()
+        nameProduct = str(input("¿Como se llama el producto que quieres tratar?: ")).strip()
         if (nameProduct == ""):
             raise ValueError("Nombre de producto no válido")
         elif len(nameProduct) < 3:
@@ -15,12 +15,12 @@ def registrar_movimiento():
         else:
             if nameProduct in productsStock:
                 movimiento = str(
-                    input("¿Que movimiento quieres registrar, una [V]enta o una [C]ompra?")).strip().lower()
+                    input("¿Que movimiento quieres registrar, una [V]enta o una [C]ompra?: ")).strip().lower()
                 while movimiento != "v" and movimiento != "c":
                     movimiento = str(
-                        input("¿Que movimiento quieres registrar, una [V]enta o una [C]ompra?")).strip().lower()
+                        input("¿Que movimiento quieres registrar, una [V]enta o una [C]ompra?: ")).strip().lower()
                 if movimiento == "v":
-                    stock = int(input("¿Cuanto has vendido?"))
+                    stock = int(input("¿Cuanto has vendido?: "))
                     if stock <= 0:
                         raise ValueError("No puedes vender una cantidad negativa")
                     elif stock > productsStock[nameProduct]:
@@ -43,6 +43,7 @@ def registrar_movimiento():
     except ValueError as error:
         print("Error: {}".format(error))
         input("Por favor, pulse enter y vuelva a intentarlo desde el principio.\n")
+        os.system("cls")
 
 
 def insertar_producto():
@@ -216,8 +217,7 @@ def mostrar_produtos():
                 print("{}. {} | Stock actual: {} | Precio actual: {}".format(count, producto, productsStock[producto],
                                                                              productsPrice[producto]))
                 count += 1
-            input("Pulse enter para continuar")
-            os.system("cls")
+
     except ValueError as error:
         print("Error: {}".format(error))
         input("Por favor, pulse enter y vuelva a intentarlo desde el principio.\n")
