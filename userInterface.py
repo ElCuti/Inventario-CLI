@@ -1,8 +1,11 @@
 from dataMethod import buscar_producto, registrar_movimiento, insertar_producto, modificar_producto, eliminar_producto, \
-    mostrar_produtos
+    mostrar_productos
 
 
 def userInterface():
+    """
+    Función principal que muestra el menú interactivo de la aplicación de inventario.
+    """
     end = False
     while not end:
         print('''
@@ -14,7 +17,11 @@ def userInterface():
         6. Registrar movimiento
         7. Salir
         ''')
-        action = int(input())
+        try:
+            action = int(input("Selecciona una opción: "))
+        except ValueError:
+            print("Por favor, introduce un número válido.")
+            continue
         if action == 1:
             insertar_producto()
 
@@ -28,7 +35,7 @@ def userInterface():
             eliminar_producto()
 
         elif action == 5:
-            mostrar_produtos()
+            mostrar_productos()
 
         elif action == 6:
             registrar_movimiento()
