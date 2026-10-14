@@ -20,6 +20,7 @@ def error_producto(error):
     Función para mostrar error en la ejecución de cualquier método
     :param error: Error registrado durante la ejecución
     """
+    os.system("cls")
     print("Error: {}".format(error))  # Mostramos el error y le obligamos a empezar de nuevo
     input("Por favor, pulse enter y vuelva a intentarlo desde el principio.\n")
     os.system("cls")
@@ -157,6 +158,7 @@ def modificar_producto():
                     productsStock[nameProduct] = stockUpdate
 
             else:  # En caso de no poner ni el 1 ni el 2 se aborta el proceso
+                os.system("cls")
                 print("Abortando modificacion")
             input("Pulse enter para continuar")
             os.system("cls")

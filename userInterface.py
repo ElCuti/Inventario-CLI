@@ -1,3 +1,5 @@
+import os
+
 from dataMethod import buscar_producto, registrar_movimiento, insertar_producto, modificar_producto, eliminar_producto, \
     mostrar_productos
 
@@ -20,7 +22,7 @@ def userInterface():
         try:
             action = int(input("Selecciona una opción: "))
         except ValueError:
-            print("Por favor, introduce un número válido.")
+            os.system("cls")
             continue
         if action == 1:
             insertar_producto()
