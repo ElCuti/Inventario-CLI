@@ -1,6 +1,5 @@
 import os
 import json
-from dataProduct import *
 
 ARCHIVO_JSON = "data.json"
 
@@ -10,7 +9,9 @@ def cargar_datos():
         return json.load(archivo)
 
 def guardar_datos(datos):
-    """Guarda el diccionario actualizado en el archivo JSON."""
+    """Guarda el diccionario actualizado en el archivo JSON.
+    :param datos: Datos modificados por los métodos
+    """
     with open(ARCHIVO_JSON, "w", encoding="utf-8") as archivo:
         json.dump(datos, archivo, indent=2, ensure_ascii=False)
 
@@ -87,6 +88,9 @@ def insertar_producto():
     Función para insertar un nuevo producto en el almacen
     """
     try:
+        datos = cargar_datos()
+        productos = datos["productos"]
+
         nameProduct = str(input("¿Como se llama el producto que quieres insertar?: ")).strip()
         validacion_nombre(nameProduct)
         stockProduct = int(input("¿Cuanto stock tienes de ese producto?: "))
@@ -97,12 +101,15 @@ def insertar_producto():
         if priceProduct < 0:  # Comprobamos que el precio del producto insertado no sea negativo
             raise ValueError("No puedes crear un producto con valor negativo")
 
-        productsStock[nameProduct] = stockProduct
-        productsPrice[nameProduct] = priceProduct
+        productos[nameProduct] = {
+            "stock": stockProduct,
+            "precio": round(priceProduct, 2)
+        }
         # Mostramos un mensaje de confirmación y limpiamos la consola
         os.system("cls")
         print('Producto "{}", con cantidad {} y valor {}€ insertado correctamente'.format(nameProduct, stockProduct,
                                                                                           priceProduct))
+        guardar_datos(datos)
         input("Pulse enter para continuar")
         os.system("cls")
     except ValueError as error:
@@ -115,16 +122,20 @@ def buscar_producto():
     :return:
     """
     try:
+        datos = cargar_datos()
+        productos = datos["productos"]
+
         nameProduct = str(input("¿Como se llama el producto que quieres buscar?: ")).strip()
         validacion_nombre(nameProduct)
-        if nameProduct in productsStock:  # Si el producto se encuentra dentro de nuestro almacen
+        if nameProduct in productos:  # Si el producto se encuentra dentro de nuestro almacen
             os.system("cls")  # mostramos la información del producto
             print("""INFORMACIÓN DE {}
             - STOCK: {}
             - PRECIO: {}€
-            - VALOR TOTAL: {}€""".format(nameProduct, productsStock[nameProduct], productsPrice[nameProduct],
-                                         productsPrice[nameProduct] * productsStock[nameProduct]))
+            - VALOR TOTAL: {}€""".format(nameProduct, productos[nameProduct]["stock"], productos[nameProduct]["precio"],
+                                         productos[nameProduct]["precio"] * productos[nameProduct]["stock"]))
             input("Pulse enter para continuar")
+            guardar_datos(datos)
             os.system("cls")
         else:  # Si no existe el producto se lo mostramos mediante un error
             raise ValueError("No existe producto solicitado")
@@ -137,9 +148,12 @@ def modificar_producto():
     Función para modificar un producto por su nombre
      """
     try:
+        datos = cargar_datos()
+        productos = datos["productos"]
+
         nameProduct = str(input("¿Como se llama el producto que quieres modificar?: ")).strip()
         validacion_nombre(nameProduct)
-        if nameProduct in productsStock:  # Si tiene ese producto en su almacen
+        if nameProduct in productos:  # Si tiene ese producto en su almacen
             os.system("cls")  # le ofrecemos modificar el precio o el stock
             action = int(input("""¿Que tipo de dato quieres modificar de {}?
             1. Precio
@@ -150,35 +164,35 @@ def modificar_producto():
             if action == 1:
                 precioUpdate = float(input(
                     "Dime el nuevo precio que quieres ponerle a {} (Precio actual: {}): ".format(nameProduct,
-                                                                                                 productsPrice[
-                                                                                                     nameProduct])))
+                                                                                                 productos[
+                                                                                                     nameProduct]["precio"])))
                 # Si modifica el precio nos aseguramos que la modificación sea válida (>0) y la realizamos
                 if precioUpdate < 0:
                     raise ValueError("No puedes poner a un producto valor negativo")
                 else:
                     print("Nuevo precio de {} actualizado correctamente {}€ -> {}€".format(nameProduct,
-                                                                                           productsPrice[
-                                                                                               nameProduct],
+                                                                                           productos[
+                                                                                               nameProduct]["precio"],
                                                                                            precioUpdate))
-                    productsPrice[nameProduct] = precioUpdate
+                    productos[nameProduct]["precio"] = precioUpdate
             elif action == 2:
                 stockUpdate = int(input(
                     "Dime el nuevo stock que quieres ponerle a {} (Stock actual: {}): ".format(nameProduct,
-                                                                                               productsStock[
-                                                                                                   nameProduct])))
+                                                                                               productos[nameProduct]["stock"])))
                 # Si modifica el stock nos aseguramos que la modificación sea válida (>0) y la realizamos
                 if stockUpdate < 0:
                     raise ValueError("No puedes poner a un producto stock negativo")
                 else:
                     print("Nuevo stock de {} actualizado correctamente {} -> {}".format(nameProduct,
-                                                                                        productsStock[nameProduct],
+                                                                                        productos[nameProduct]["stock"],
                                                                                         stockUpdate))
-                    productsStock[nameProduct] = stockUpdate
+                    productos[nameProduct]["stock"] = stockUpdate
 
             else:  # En caso de no poner ni el 1 ni el 2 se aborta el proceso
                 os.system("cls")
                 print("Abortando modificacion")
             input("Pulse enter para continuar")
+            guardar_datos(datos)
             os.system("cls")
         else:
             raise ValueError("No existe producto solicitado")
@@ -191,14 +205,16 @@ def eliminar_producto():
     Función para eliminar un producto de nuestro almacen
     """
     try:
+        datos = cargar_datos()
+        productos = datos["productos"]
+
         nameProduct = str(input("¿Como se llama el producto que quieres eliminar?: ")).strip()
         validacion_nombre(nameProduct)
-        if nameProduct in productsStock:
-            del productsStock[
-                nameProduct]  # Si el producto existe dentro de nuestro almacen eliminamos el stock y el precio
-            del productsPrice[nameProduct]
+        if nameProduct in productos:
+            del productos[nameProduct]  # Si el producto existe dentro de nuestro almacen eliminamos el stock y el precio
             os.system("cls")
             print('¡Almacen actualizado correctamente! Producto "{}" eliminado'.format(nameProduct))
+            guardar_datos(datos)
             input("Pulse enter para continuar")  # Avisamos al usuario de que la operación fue exitosa
             os.system("cls")
         else:
@@ -212,16 +228,18 @@ def mostrar_productos():
     Función para mostrar todos los productos del almacen
     """
     try:
-        if len(productsStock) == 0:  # Si no tiene productos en el almacen salta el error
+        datos = cargar_datos()
+        productos = datos["productos"]
+
+        if len(productos) == 0:  # Si no tiene productos en el almacen salta el error
             raise ValueError("No tienes productos en tu almacen")
         else:
             os.system("cls")
             print('Estos son todos los productos de tu almacen:\n')
-            count = 1  # Mostramos todos los productos y les ponemos un numero al principio
-            for producto in productsStock.keys():
-                print("{}. {} | Stock actual: {} | Precio actual: {}".format(count, producto, productsStock[producto],
-                                                                             productsPrice[producto]))
-                count += 1
+            for producto in productos.keys():
+                print("{} | Stock actual: {} | Precio actual: {}".format(producto, productos[producto]["stock"],
+                                                                             productos[producto]["precio"]))
+
 
     except ValueError as error:
         error_producto(error)

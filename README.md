@@ -10,7 +10,7 @@ El proyecto sigue una estructura limpia para facilitar el mantenimiento y la esc
 
 *   `main.py`: Punto de entrada principal de la aplicación.
 *   `dataMethod.py`: Contiene todos los metodos que se pueden usar para tratar el almacen.
-*   `dataProduct.py`: Contiene la estructura de datos con la que guardo toda la información, mas adelante el almacenamiento se hara mediante arhcivos.
+*   `data.json`: Contiene los datos de todos los productos.
 *   `userInterface.py`: Contiene la parte del trato con el cliente de la aplicación.
 
 ## 🛠️ Tecnologías y Conceptos Aplicados
