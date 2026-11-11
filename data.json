@@ -1,0 +1,148 @@
+{
+  "productos": {
+    "Bolígrafo Azul Bic Cristal": {
+      "stock": 260,
+      "precio": 0.45
+    },
+    "Bolígrafo Negro Bic Cristal": {
+      "stock": 200,
+      "precio": 0.45
+    },
+    "Bolígrafo Rojo Bic Cristal": {
+      "stock": 180,
+      "precio": 0.45
+    },
+    "Bolígrafo Verde Bic Cristal": {
+      "stock": 90,
+      "precio": 0.45
+    },
+    "Bolígrafo Gel Negro 0.5mm": {
+      "stock": 120,
+      "precio": 1.25
+    },
+    "Bolígrafo Gel Azul 0.5mm": {
+      "stock": 110,
+      "precio": 1.25
+    },
+    "Bolígrafo Gel Rojo 0.5mm": {
+      "stock": 85,
+      "precio": 1.25
+    },
+    "Bolígrafo Borrable Pilot Frixion Azul": {
+      "stock": 95,
+      "precio": 2.8
+    },
+    "Bolígrafo Borrable Pilot Frixion Negro": {
+      "stock": 80,
+      "precio": 2.8
+    },
+    "Bolígrafo Borrable Pilot Frixion Rojo": {
+      "stock": 60,
+      "precio": 2.8
+    },
+    "Recambio Pilot Frixion Azul Pack 3": {
+      "stock": 50,
+      "precio": 5.5
+    },
+    "Pluma Estilográfica Lamy Safari": {
+      "stock": 15,
+      "precio": 24.9
+    },
+    "Cartuchos de Tinta Azul Pack 6": {
+      "stock": 40,
+      "precio": 2.1
+    },
+    "Lápiz Grafito Faber-Castell HB": {
+      "stock": 300,
+      "precio": 0.6
+    },
+    "Lápiz Grafito Faber-Castell 2B": {
+      "stock": 180,
+      "precio": 0.65
+    },
+    "Lápiz Grafito Faber-Castell 4B": {
+      "stock": 140,
+      "precio": 0.7
+    },
+    "Lápiz Grafito Faber-Castell 2H": {
+      "stock": 100,
+      "precio": 0.65
+    },
+    "Portaminas Pilot 0.5mm": {
+      "stock": 75,
+      "precio": 3.2
+    },
+    "Portaminas Pilot 0.7mm": {
+      "stock": 65,
+      "precio": 3.2
+    },
+    "Minas 0.5mm HB Pentel Pack 12": {
+      "stock": 150,
+      "precio": 1.1
+    },
+    "Minas 0.7mm HB Pentel Pack 12": {
+      "stock": 130,
+      "precio": 1.1
+    },
+    "Goma de Borrar Milan 430": {
+      "stock": 220,
+      "precio": 0.5
+    },
+    "Goma Borrar Miga de Pan Staedtler": {
+      "stock": 160,
+      "precio": 0.8
+    },
+    "Sacapuntas Metálico Doble": {
+      "stock": 140,
+      "precio": 0.9
+    },
+    "Sacapuntas con Depósito Milan": {
+      "stock": 95,
+      "precio": 1.75
+    },
+    "Sacapuntas Eléctrico Sobremesa": {
+      "stock": 12,
+      "precio": 18.5
+    },
+    "Cuaderno A4 Espiral Tapa Dura Cuadrícula": {
+      "stock": 110,
+      "precio": 3.8
+    },
+    "Cuaderno A4 Espiral Tapa Dura Pautado": {
+      "stock": 85,
+      "precio": 3.8
+    },
+    "Cuaderno A4 Espiral Tapa Dura Liso": {
+      "stock": 60,
+      "precio": 3.8
+    },
+    "Cuaderno A5 Espiral Tapa Dura Cuadrícula": {
+      "stock": 140,
+      "precio": 2.6
+    },
+    "Cuaderno A5 Espiral Tapa Dura Pautado": {
+      "stock": 90,
+      "precio": 2.6
+    },
+    "Cuaderno B5 Bullet Journal 120g": {
+      "stock": 35,
+      "precio": 12.9
+    },
+    "Libreta Bolsillo Moleskine Lisa": {
+      "stock": 25,
+      "precio": 14.5
+    },
+    "Bloc Notas Adhesivas Post-it Amarillas": {
+      "stock": 200,
+      "precio": 1.95
+    },
+    "Bloc Notas Adhesivas Neón Multicolor": {
+      "stock": 160,
+      "precio": 2.4
+    },
+    "Banderitas Adhesivas Marcadoras": {
+      "stock": 180,
+      "precio": 1.8
+    }
+  }
+}

@@ -1,6 +1,18 @@
 import os
+import json
 from dataProduct import *
 
+ARCHIVO_JSON = "data.json"
+
+def cargar_datos():
+    """Lee el archivo JSON y devuelve el diccionario completo."""
+    with open(ARCHIVO_JSON, "r", encoding="utf-8") as archivo:
+        return json.load(archivo)
+
+def guardar_datos(datos):
+    """Guarda el diccionario actualizado en el archivo JSON."""
+    with open(ARCHIVO_JSON, "w", encoding="utf-8") as archivo:
+        json.dump(datos, archivo, indent=2, ensure_ascii=False)
 
 def validacion_nombre(nameProduct):
     """
@@ -31,32 +43,38 @@ def registrar_movimiento():
     Función para registrar una venta o una compra
     """
     try:
+        datos = cargar_datos()
+        productos = datos["productos"]
+
         nameProduct = str(input("¿Como se llama el producto que quieres tratar?: ")).strip()
         validacion_nombre(nameProduct)  # Llamamos a la función para validar el nombre
-        if nameProduct in productsStock:  # Comprobamos si el producto existe dentro de nuestro almacen
+        if nameProduct in productos:  # Comprobamos si el producto existe dentro de nuestro almacen
             movimiento = str(
                 input("¿Que movimiento quieres registrar, una [V]enta o una [C]ompra?: ")).strip().lower()
             while movimiento != "v" and movimiento != "c":  # Pedimos al usuario que tipo de movimiento quiere realizar (venta o compra)
                 movimiento = str(
                     input("¿Que movimiento quieres registrar, una [V]enta o una [C]ompra?: ")).strip().lower()
+            stock_actual = productos[nameProduct]["stock"]
             if movimiento == "v":
                 stock = int(input("¿Cuanto has vendido?: "))
                 if stock <= 0:  # VALIDACIONES: Que el stock vendido no sea negativo y que tenga stock en el almacen suficiente
                     raise ValueError("No puedes vender una cantidad negativa")
-                elif stock > productsStock[nameProduct]:
+                elif stock > stock_actual :
                     raise ValueError("No puedes vender una cantidad mayor a la que tienes")
                 else:  # Restamos el stock del almacen y mostramos el stock actual
-                    productsStock[nameProduct] -= stock
+                    productos[nameProduct]["stock"] -= stock
+                    guardar_datos(datos)
                     print("Stock actualizado correctamente (Stock antiguo {} -> {} Stock nuevo)".format(
-                        (productsStock[nameProduct] + stock), productsStock[nameProduct]))
+                        stock_actual, productos[nameProduct]["stock"]))
             else:
                 stock = int(input("¿Cuanto has comprado?"))
                 if stock <= 0:  # VALIDACIONES: Que la cantidad comprada no sea 0 o negativa, para eso existe el modificar stock o registrar venta
                     raise ValueError("No puedes comprar una cantidad negativa")
                 else:  # Sumamos el stock comprado y se lo mostramos al usuario
-                    productsStock[nameProduct] += stock
+                    productos[nameProduct]["stock"] += stock
+                    guardar_datos(datos)
                     print("Stock actualizado correctamente (Stock antiguo {} -> {} Stock nuevo)".format(
-                        (productsStock[nameProduct] - stock), productsStock[nameProduct]))
+                        stock_actual, productos[nameProduct]["stock"]))
         else:  # Si no existe el producto en el almacen saltamos error
             raise ValueError("No existe producto solicitado")
 
